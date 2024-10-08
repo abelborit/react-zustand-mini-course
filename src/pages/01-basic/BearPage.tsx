@@ -1,3 +1,4 @@
+import { useShallow } from "zustand/shallow";
 import { WhiteCard } from "../../components";
 import { useBearStore } from "../../stores/bears/bears.store";
 
@@ -54,6 +55,8 @@ export const BearPage = () => {
         <BlackBears />
         <PolarBears />
         <PandaBears />
+
+        <BearsDisplay />
       </div>
     </>
   );
@@ -119,6 +122,30 @@ export const PandaBears = () => {
         <span className="text-3xl mx-2 lg:mx-10">{pandaBears}</span>
         <button onClick={() => increaseDrecreasePandaBearsBy(-1)}>-1</button>
       </div>
+    </WhiteCard>
+  );
+};
+
+export const BearsDisplay = () => {
+  /* para evitar lo de abajo y las re-renderizaciones al usar objetos anidados, es decir, tener un estado en nuestro store -- bears: [ { id: 1, name: "Oso #1" }, { id: 2, name: "Oso #2" } ], -- y vamos a regresar un nuevo estado en nuetro store -- (state) => ({ bears: [...state.bears] }) -- podemos usar el useShallow(....) */
+
+  // const bears = useBearStore((state) => state.bears); // renderizará el componente así sus propiedades no hayan cambiado
+  const bears = useBearStore(useShallow((state) => state.bears)); // se encargará de analizar las propiedades de este objeto y confirmar si realmente cambiaron y si cambiaron entonces lo va a volver a re-renderizar porque obviamente cambió su estado y si no cambiaron entonces no se re-renderizará el componente
+
+  /* al presionar el botón vemos que se renderiza de nuevo el componente y eso no es gran problema y es casi imperceptible para todo el mundo y para una aplicación como esta es imperceptible pero puede ser que esto sí cause algún tipo de problema a futuro porque al estar cambiando el estado, porque se tiene un estado ya existente en el store pero con el spread operator se está regresando un nuevo estado porque se crea un nuevo objeto en memoria, hace que se re-renderiza el componente otra vez entonces se puede lanzar algún código o useEffect de forma innecesaria pero esto se puede solucionar usando el useShallow(....) */
+  const doNothing = useBearStore((state) => state.doNothing);
+
+  return (
+    <WhiteCard>
+      <h1>Osos</h1>
+
+      <button onClick={doNothing}>Do Nothing</button>
+
+      {/* una forma rápida de visualizar objetos en JavaScript es usar el tag <pre>{.....}</pre> junto con JSON.stringify(......) */}
+      <pre>{JSON.stringify(bears, null, 2)}</pre>
+
+      {/* <br />
+      {JSON.stringify(bears, null, 2)} */}
     </WhiteCard>
   );
 };
