@@ -7,9 +7,13 @@ import {
 } from "react-icons/io5";
 import { WhiteCard } from "../../components";
 import { useBearStore } from "../../stores/bears/bears.store";
+import { usePersonStore } from "../../stores/person/person.store";
 
 export const Dashboard = () => {
   const totalBears = useBearStore((state) => state.computedProp.totalBears);
+  /* aquí se podría usar un getter en el usePersonStore para unir el firstName y lastName */
+  const firstName = usePersonStore((state) => state.firstName);
+  const lastName = usePersonStore((state) => state.lastName);
 
   return (
     <>
@@ -27,7 +31,7 @@ export const Dashboard = () => {
         <WhiteCard centered>
           <IoAccessibilityOutline size={50} className="text-indigo-600" />
           <h2>Persona</h2>
-          <p>Información</p>
+          <p>{firstName + " " + lastName}</p>
         </WhiteCard>
 
         <WhiteCard centered>
