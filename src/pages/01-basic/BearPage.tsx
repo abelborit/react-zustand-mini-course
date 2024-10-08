@@ -135,11 +135,20 @@ export const BearsDisplay = () => {
   /* al presionar el botón vemos que se renderiza de nuevo el componente y eso no es gran problema y es casi imperceptible para todo el mundo y para una aplicación como esta es imperceptible pero puede ser que esto sí cause algún tipo de problema a futuro porque al estar cambiando el estado, porque se tiene un estado ya existente en el store pero con el spread operator se está regresando un nuevo estado porque se crea un nuevo objeto en memoria, hace que se re-renderiza el componente otra vez entonces se puede lanzar algún código o useEffect de forma innecesaria pero esto se puede solucionar usando el useShallow(....) */
   const doNothing = useBearStore((state) => state.doNothing);
 
+  const addBear = useBearStore((state) => state.addBear);
+  const clearBears = useBearStore((state) => state.clearBears);
+
   return (
     <WhiteCard>
       <h1>Osos</h1>
 
       <button onClick={doNothing}>Do Nothing</button>
+      <button className="mt-2" onClick={addBear}>
+        Add Bear
+      </button>
+      <button className="mt-2" onClick={clearBears}>
+        Clear Bears
+      </button>
 
       {/* una forma rápida de visualizar objetos en JavaScript es usar el tag <pre>{.....}</pre> junto con JSON.stringify(......) */}
       <pre>{JSON.stringify(bears, null, 2)}</pre>

@@ -17,6 +17,8 @@ interface BearState {
   increaseDrecreasePandaBearsBy: (increaseBy: number) => void;
 
   doNothing: () => void;
+  addBear: () => void;
+  clearBears: () => void;
 }
 
 /* la documentación nos indica que el store viene a ser un hook, como se puede ver en su inicial de "use...." y también como se está usando TypeScript entonces se tiene que colocar create<T>()(.....) */
@@ -48,4 +50,14 @@ export const useBearStore = create<BearState>()((set) => ({
 
       return { bears: [...state.bears] };
     }),
+
+  addBear: () =>
+    set((state) => ({
+      bears: [
+        ...state.bears,
+        { id: state.bears.length + 1, name: `Oso #${state.bears.length + 1}` },
+      ],
+    })),
+
+  clearBears: () => set({ bears: [] }), // como no se está usando el state entonces se puede mandar así
 }));
