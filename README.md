@@ -65,3 +65,42 @@ En esta sección tendremos las bases de Zustand.
 - ejemplo
 
 ---
+
+## Parte II:
+
+# Temas puntuales de la sección
+
+### ¿Qué veremos en esta sección?
+
+En esta sección vamos a trabajar con middlewares o funciones adicionales que expanden el comportamiento por defecto de Zustand.
+
+- Puntualmente veremos:
+
+  - Persist Middlewares (hacer persistente nuestro store, es decir, cuando se hace alguna modificación automáticamente lo guarda en el localStorage y cuando se recargue la aplicación automáticamente lo va obtener del localStorage)
+  - createJSONStore
+  - Guardar automáticamente en session storage
+  - Guardar automáticamente en Firebase
+  - Crear un storage personalizado
+  - Diferentes interfaces de Zustand
+  - Custom Middleware
+  - Redux DevTools y acciones
+
+### \* PASOS A REALIZAR:
+
+1. ejemplo
+2. ejemplo
+3. ejemplo
+
+### \* RECURSOS A USAR:
+
+- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+
+### \* NOTAS:
+
+- ejemplo
+- ejemplo
+- ejemplo
+
+---
