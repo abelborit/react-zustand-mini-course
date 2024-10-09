@@ -2,6 +2,7 @@
 import { create, type StateCreator } from "zustand";
 import { persist } from "zustand/middleware";
 import { customSessionStorage } from "../storages/customSessionStorage.storage";
+// import { customFirebaseStorage } from "../storages/customFirebaseStorage.storage";
 
 /* se puede tener todo junto o sino por separado en dos interfaces */
 // interface PersonState {
@@ -44,5 +45,6 @@ export const usePersonStore = create<PersonState & ActionsState>()(
     name: "person-storage",
     /* también podemos personalizar un poco más nuestro middleware y que en vez de que se grabe en el localStorage se guarde en el sessionStorage por ejemplo */
     storage: customSessionStorage, // el storage espera algo de tipo createJSONStorage por eso se coloca createJSONStorage(.....) y tiene un callback para que se ejecute en ese momento. Eso ya está en el archivo -- customSessionStorage.storage.ts --
+    // storage: customFirebaseStorage,
   })
 );
