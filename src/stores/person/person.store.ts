@@ -1,6 +1,7 @@
 /* se coloca como -- type StateCreator -- porque solo usaremos el StateCreator como una interface y no queremos que cuando se cree la aplicación se importe nada ahí */
 import { create, type StateCreator } from "zustand";
-import { createJSONStorage, persist, StateStorage } from "zustand/middleware";
+import { persist } from "zustand/middleware";
+import { customSessionStorage } from "../storages/customSessionStorage.storage";
 
 /* se puede tener todo junto o sino por separado en dos interfaces */
 // interface PersonState {
@@ -35,24 +36,6 @@ const storeAPI: StateCreator<PersonState & ActionsState> = (set) => ({
   setLastName: (value: string) => set({ lastName: value }),
 });
 
-/* se puede presionar ctrl + . para agregar las propiedades o métodos que faltan al colocarle el tipo StateStorage */
-const sessionStorage: StateStorage = {
-  getItem: function (name: string): string | null | Promise<string | null> {
-    console.log("getItem", { name });
-    return null;
-  },
-
-  setItem: function (name: string, value: string): unknown | Promise<unknown> {
-    console.log("setItem", { name, value });
-    return null;
-  },
-
-  removeItem: function (name: string): unknown | Promise<unknown> {
-    console.log("removeItem", { name });
-    return null;
-  },
-};
-
 export const usePersonStore = create<PersonState & ActionsState>()(
   /* los middlewares son funciones que envuelven nuestro objeto de configuración del store, es decir, el -- (set => ({.....})) -- */
   /* este middleware persist nos servirá para grabar nuestro estado o state de forma persistente en el localStorage */
@@ -60,6 +43,6 @@ export const usePersonStore = create<PersonState & ActionsState>()(
     /* este objeto adicional es para pasarle una configuración la cual llevará, por ejemplo, el name que será el nombre que se le dará al storage con el que quiero que se guarde en el localStorage */
     name: "person-storage",
     /* también podemos personalizar un poco más nuestro middleware y que en vez de que se grabe en el localStorage se guarde en el sessionStorage por ejemplo */
-    storage: createJSONStorage(() => sessionStorage), // el storage espera algo de tipo createJSONStorage por eso se coloca createJSONStorage(.....) y tiene un callback para que se ejecute en ese momento
+    storage: customSessionStorage, // el storage espera algo de tipo createJSONStorage por eso se coloca createJSONStorage(.....) y tiene un callback para que se ejecute en ese momento. Eso ya está en el archivo -- customSessionStorage.storage.ts --
   })
 );
