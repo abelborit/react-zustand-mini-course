@@ -10,7 +10,7 @@ import { useBearStore } from "../../stores/bears/bears.store";
 import { usePersonStore } from "../../stores/person/person.store";
 
 export const Dashboard = () => {
-  const totalBears = useBearStore((state) => state.computedProp.totalBears);
+  const totalBears = useBearStore((state) => state.totalBears);
   /* aquí se podría usar un getter en el usePersonStore para unir el firstName y lastName */
   const firstName = usePersonStore((state) => state.firstName);
   const lastName = usePersonStore((state) => state.lastName);
@@ -25,7 +25,7 @@ export const Dashboard = () => {
         <WhiteCard centered>
           <IoPawOutline size={50} className="text-indigo-600" />
           <h2>Osos</h2>
-          <p>{totalBears}</p>
+          <p>{totalBears()}</p>
         </WhiteCard>
 
         <WhiteCard centered>
