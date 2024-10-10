@@ -1,8 +1,5 @@
 import { DragEvent, useState } from "react";
-import {
-  IoCheckmarkCircleOutline,
-  IoEllipsisHorizontalOutline,
-} from "react-icons/io5";
+import { IoAddOutline, IoCheckmarkCircleOutline } from "react-icons/io5";
 import { TaskInterface, TaskStatus } from "../../interfaces";
 import { SingleTask } from "./SingleTask";
 import { useTaskStore } from "../../stores/taks/task.store";
@@ -18,6 +15,7 @@ export const JiraTasks = ({ title, value, tasks }: Props) => {
   const isDraggingTask = useTaskStore((state) => !!state.draggingTaskId); // se coloca la doble negación para transformarlo a un valor boolean para manejar solo las casuísticas de true o false cuando se esté haciendo o no se esté haciendo el dragging del elemento, también se podría manejar de forma normal -- const draggingTaskId = useTaskStore((state) => state.draggingTaskId); -- y hacer alguna validación
   const [isDragOver, setIsDragOver] = useState(false);
   const setOnTaskDrop = useTaskStore((state) => state.setOnTaskDrop);
+  const setAddTask = useTaskStore((state) => state.setAddTask);
 
   const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -36,6 +34,10 @@ export const JiraTasks = ({ title, value, tasks }: Props) => {
     setIsDragOver(false);
     setOnTaskDrop(value);
     // console.log("onDrop", value);
+  };
+
+  const handleAddTask = () => {
+    setAddTask("New Task", value);
   };
 
   return (
@@ -68,8 +70,8 @@ export const JiraTasks = ({ title, value, tasks }: Props) => {
           <h4 className="ml-4 text-xl font-bold text-navy-700">{title}</h4>
         </div>
 
-        <button>
-          <IoEllipsisHorizontalOutline />
+        <button onClick={handleAddTask}>
+          <IoAddOutline />
         </button>
       </div>
 

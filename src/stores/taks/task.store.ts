@@ -2,6 +2,7 @@
 import { create, type StateCreator } from "zustand";
 import type { TaskInterface, TaskStatus } from "../../interfaces";
 import { devtools } from "zustand/middleware";
+import { v4 as uuidv4 } from "uuid";
 
 interface TaskState {
   /* FORMA 1: forma común de decir que será un objeto donde la key será de tipo string y el value será de tipo TaskInterface */
@@ -12,6 +13,8 @@ interface TaskState {
   draggingTaskId?: string; // será opcional porque en un momento tendré undefined y luego en otro momento tendré el valor el cual será el id de la tarea que quiero mover
 
   getTaskByStatus: (status: TaskStatus) => TaskInterface[];
+  setAddTask: (title: string, status: TaskStatus) => void;
+
   setDraggingTaskId: (taskId: string) => void; // cuando se quiere hacer el dragging de la tarea
   removeDraggingTaskId: () => void; //  cuando se suelta la tarea el estado final tiene que ser como cuando empezó "undefined" porque ya se completó el movimiento de la tarea ya sea en el mismo lugar o a otro lado
   changeTaskStatus: (taskId: string, status: TaskStatus) => void;
@@ -34,6 +37,17 @@ const storeAPI: StateCreator<TaskState> = (set, get) => ({
 
     /* Object.values(tasks) para barrer todos los objetos por sus values y eso me retorna un arreglo y ahí recién puedo hacer uso de los métodos de los arreglos como el map, some, filter, etc */
     return Object.values(tasks).filter((task) => task.status === status);
+  },
+
+  setAddTask: (title: string, status: TaskStatus) => {
+    const newTask = { id: uuidv4(), title, status };
+
+    set((state) => ({
+      tasks: {
+        ...state.tasks,
+        [newTask.id]: newTask, // para hacer la propiedad key según el valor que viene en el newTask.id y que sea una propiedad computada y luego enviar el newTask que es la nueva tarea
+      },
+    }));
   },
 
   setDraggingTaskId: (taskId: string) => {
