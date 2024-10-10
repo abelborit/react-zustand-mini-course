@@ -1,4 +1,4 @@
-import { useShallow } from "zustand/shallow";
+import { useShallow } from 'zustand/react/shallow';
 import { WhiteCard } from "../../components";
 import { useBearStore } from "../../stores/bears/bears.store";
 
