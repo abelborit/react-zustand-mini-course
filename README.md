@@ -131,7 +131,7 @@ En esta sección aprenderemos a trabajar con objetos anidados dentro de nuestro 
 
 ### \* RECURSOS A USAR:
 
-- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+- Paquete `classnames` usando `npm i classnames` desde `https://www.npmjs.com/package/classnames`
 - Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
 - Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
 
