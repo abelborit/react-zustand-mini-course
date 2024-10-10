@@ -14,6 +14,7 @@ interface TaskState {
   getTaskByStatus: (status: TaskStatus) => TaskInterface[];
   setDraggingTaskId: (taskId: string) => void; // cuando se quiere hacer el dragging de la tarea
   removeDraggingTaskId: () => void; //  cuando se suelta la tarea el estado final tiene que ser como cuando empezó "undefined" porque ya se completó el movimiento de la tarea ya sea en el mismo lugar o a otro lado
+  changeTaskStatus: (taskId: string, status: TaskStatus) => void;
 }
 
 /* al colocar middlewares una forma de mantener el orden puede ser colocar aparte nuestro objeto de configuración del store o sino también se puede colocar todo junto, ambas formas son válidas */
@@ -40,6 +41,18 @@ const storeAPI: StateCreator<TaskState> = (set, get) => ({
 
   removeDraggingTaskId: () => {
     set({ draggingTaskId: undefined });
+  },
+
+  changeTaskStatus: (taskId: string, status: TaskStatus) => {
+    const task = get().tasks[taskId]; // para obtener la tarea en base al taskId
+    task.status = status; // cambiar el status que tiene por el nuevo status que viene como parámetro
+
+    set((state) => ({
+      tasks: {
+        ...state.tasks,
+        [taskId]: task, // para hacer la propiedad key según el valor que viene en el taskId y luego enviar la task con el valor status cambiado
+      },
+    }));
   },
 });
 
