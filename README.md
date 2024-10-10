@@ -104,3 +104,41 @@ En esta sección vamos a trabajar con middlewares o funciones adicionales que ex
 - ejemplo
 
 ---
+
+## Parte III:
+
+# Temas puntuales de la sección
+
+### ¿Qué veremos en esta sección?
+
+En esta sección aprenderemos a trabajar con objetos anidados dentro de nuestro store con el objetivo de apreciar claramente el beneficio de utilizar la función _produce_ o mejor aún, el _middleware immer_, para poder mutar el estado y generar uno nuevo basado en esa mutación. Esto quiere decir que, cuando trabajamos por ejemplo con Redux o el useReducer de React, estamos acostumbrados a hacer el spread operator para crear una nueva copia (por así decirlo) del estado porque si mutamos el estado anterior entonces React no se da cuenta que hubo un cambio y aquí es donde entra _immer_ en juego porque lo vamos a usar primero como una función para producir un nuevo estado y luego también usándolo como middleware (que así sería un poco más sencillo) y la idea de este middleware en base a immer es escribir código que muta el estado (lo cambia/actualiza) y que este middleware se encargue de emitir un nuevo estado y eso hará que nuestro código se reduzca bastante para que sea más facil de leer y mantener.
+
+- Puntualmente veremos:
+
+  - Drag & Drop (sin dependencias)
+  - Uso de Store con objetos anidados
+  - Middlewares
+  - Funciones adicionales
+  - UUID
+  - Mutaciones vs Clonaciones
+  - Tipado en TypeScript
+
+### \* PASOS A REALIZAR:
+
+1. ejemplo
+2. ejemplo
+3. ejemplo
+
+### \* RECURSOS A USAR:
+
+- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+
+### \* NOTAS:
+
+- ejemplo
+- ejemplo
+- ejemplo
+
+---
