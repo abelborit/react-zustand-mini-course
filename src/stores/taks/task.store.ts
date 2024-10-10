@@ -27,7 +27,11 @@ interface TaskState {
 /* se está añadiendo al tipado el -- [["zustand/devtools", never], ["zustand/immer", never]] -- para que no nos de error al usar el middleware immer y también para aumentar su funcionalidad, así como para aumentar su funcionalidad al usar el middleware devtools y en Redux Devtools tener el nombre a las actions como se hizo en person.store.ts y otra forma de evitar colocar el tipado aquí es volver a colocar todo esta configuración del store, es decir, el -- ((set, get) => ({.....})) -- junto y no en una variable separada */
 const storeAPI: StateCreator<
   TaskState,
-  [["zustand/devtools", never], ["zustand/immer", never]]
+  [
+    ["zustand/devtools", never],
+    ["zustand/persist", unknown],
+    ["zustand/immer", never]
+  ]
 > = (set, get) => ({
   /* en este caso por ejemplo se está haciendo mediante un objeto y no mediante un arreglo porque cada forma tiene su punto fuerte y débil, en este caso mediante los objetos es un poco más dificil obtener los datos pero a la hora de actualizar una propiedad es más sencillo porque si se conoce la key entonces se va directamente a esa key y verificar si existe y entonces se actualiza el valor de la propiedad que queremos, en un arreglo es más facil barrerlo de frente pero a la hora de querer cambiar algún dato tenemos precisamente que barrer todo el arreglo y luego filtrar y encontrar el dato correspondiente y recién cambiar la propiedad que queremos */
   tasks: {
@@ -64,17 +68,21 @@ const storeAPI: StateCreator<
     // );
 
     /* ahora usaremos el middleware immer que viene instalado en zustand */
-    set((state) => {
-      state.tasks[newTask.id] = newTask;
-    });
+    set(
+      (state) => {
+        state.tasks[newTask.id] = newTask;
+      },
+      false,
+      "setAddTask"
+    );
   },
 
   setDraggingTaskId: (taskId: string) => {
-    set({ draggingTaskId: taskId });
+    set({ draggingTaskId: taskId }, false, "setDraggingTaskId");
   },
 
   removeDraggingTaskId: () => {
-    set({ draggingTaskId: undefined });
+    set({ draggingTaskId: undefined }, false, "removeDraggingTaskId");
   },
 
   changeTaskStatus: (taskId: string, status: TaskStatus) => {
@@ -100,12 +108,16 @@ const storeAPI: StateCreator<
 
     /* FORMA 3 */
     /* para solucionar lo anterior se puede hacer de esta forma */
-    set((state) => {
-      state.tasks[taskId] = {
-        ...state.tasks[taskId], // mantener el estado que se tenía anteriormente para solo actualizar lo que se necesita
-        status,
-      };
-    });
+    set(
+      (state) => {
+        state.tasks[taskId] = {
+          ...state.tasks[taskId], // mantener el estado que se tenía anteriormente para solo actualizar lo que se necesita
+          status,
+        };
+      },
+      false,
+      "changeTaskStatus"
+    );
 
     /* FORMA 4 */
     /* otra forma también podría ser */
