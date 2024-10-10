@@ -132,9 +132,15 @@ En esta sección aprenderemos a trabajar con objetos anidados dentro de nuestro 
 ### \* RECURSOS A USAR:
 
 - Paquete `classnames` usando `npm i classnames` desde `https://www.npmjs.com/package/classnames`
+
 - Paquete `uuid` usando `npm i uuid` desde `https://www.npmjs.com/package/uuid`
+
   - Para los types usando `npm i --save-dev @types/uuid`
+
 - Paquete `SweetAlert2` usando `npm install sweetalert2` desde `https://sweetalert2.github.io/`
+
+- Paquete `Immer` usando `npm install immer` desde `https://immerjs.github.io/immer/`
+
 - Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
 
 ### \* NOTAS:
