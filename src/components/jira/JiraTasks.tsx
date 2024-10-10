@@ -1,10 +1,8 @@
-import { DragEvent, useState } from "react";
 import { IoAddOutline, IoCheckmarkCircleOutline } from "react-icons/io5";
 import { TaskInterface, TaskStatus } from "../../interfaces";
 import { SingleTask } from "./SingleTask";
-import { useTaskStore } from "../../stores/taks/task.store";
 import classNames from "classnames";
-import Swal from "sweetalert2";
+import { useTasks } from "../../hooks/useTasks";
 
 interface Props {
   title: string;
@@ -13,48 +11,17 @@ interface Props {
 }
 
 export const JiraTasks = ({ title, status, tasks }: Props) => {
-  const isDraggingTask = useTaskStore((state) => !!state.draggingTaskId); // se coloca la doble negación para transformarlo a un valor boolean para manejar solo las casuísticas de true o false cuando se esté haciendo o no se esté haciendo el dragging del elemento, también se podría manejar de forma normal -- const draggingTaskId = useTaskStore((state) => state.draggingTaskId); -- y hacer alguna validación
-  const [isDragOver, setIsDragOver] = useState(false);
-  const setOnTaskDrop = useTaskStore((state) => state.setOnTaskDrop);
-  const setAddTask = useTaskStore((state) => state.setAddTask);
+  const {
+    /* Properties */
+    isDraggingTask,
+    isDragOver,
 
-  const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setIsDragOver(true);
-    // console.log("onDragOver");
-  };
-
-  const handleDragLeave = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setIsDragOver(false);
-    // console.log("onDragLeave");
-  };
-
-  const handleDrop = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setIsDragOver(false);
-    setOnTaskDrop(status);
-    // console.log("onDrop", status);
-  };
-
-  const handleAddTask = async () => {
-    const { isConfirmed, value } = await Swal.fire({
-      title: "Add a new task",
-      input: "text",
-      inputLabel: "Task name",
-      inputPlaceholder: "Enter the name of the task",
-      showCancelButton: true,
-      inputValidator: (value) => {
-        if (!value) {
-          return "You must enter a name for the task";
-        }
-      },
-    });
-
-    if (!isConfirmed) return;
-
-    setAddTask(value, status);
-  };
+    /* Methods */
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handleAddTask,
+  } = useTasks({ status });
 
   return (
     <div
