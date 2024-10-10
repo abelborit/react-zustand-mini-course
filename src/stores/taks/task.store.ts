@@ -3,6 +3,7 @@ import { create, type StateCreator } from "zustand";
 import type { TaskInterface, TaskStatus } from "../../interfaces";
 import { devtools } from "zustand/middleware";
 import { v4 as uuidv4 } from "uuid";
+import { produce } from "immer";
 
 interface TaskState {
   /* FORMA 1: forma común de decir que será un objeto donde la key será de tipo string y el value será de tipo TaskInterface */
@@ -42,12 +43,20 @@ const storeAPI: StateCreator<TaskState> = (set, get) => ({
   setAddTask: (title: string, status: TaskStatus) => {
     const newTask = { id: uuidv4(), title, status };
 
-    set((state) => ({
-      tasks: {
-        ...state.tasks,
-        [newTask.id]: newTask, // para hacer la propiedad key según el valor que viene en el newTask.id y que sea una propiedad computada y luego enviar el newTask que es la nueva tarea
-      },
-    }));
+    /* esta forma es como se usaría por ejemplo en Redux, Redux Toolkit, Reducers de React con el operador spread para mantener el estado anterior y cambiar los nuevos valores, es decir -- ...state.tasks, -- y está bien pero hay otra forma también para poder trabajarlo y escribir un código más sencillo, mutar el estado y al hacer la mutación generar un nuevo state y para eso lo podemos hacer con el package immer ya sea instalando el paquete y usar su función "produce" o usando el middleware de immer que ya viene instalado en zustand */
+    // set((state) => ({
+    //   tasks: {
+    //     ...state.tasks,
+    //     [newTask.id]: newTask, // para hacer la propiedad key según el valor que viene en el newTask.id y que sea una propiedad computada y luego enviar el newTask que es la nueva tarea
+    //   },
+    // }));
+
+    /* la función "produce" del paquete immer se usaría solo donde se está haciendo uso del spread operator para mutar el estado. Darse cuenta que no se está usando el return implícito, sino que es una función común y corriente, es decir, está como -- (state: TaskState) => {......} -- y NO como -- (state: TaskState) => ({......}) -- y solo se va y coloca lo que se quiere hacer/actualizar, en este caso, se va a mutar el objeto del state añadiendo una nueva tarea */
+    set(
+      produce((state: TaskState) => {
+        state.tasks[newTask.id] = newTask; // este es un código mutante, se está mutando el state, cosa que por ejemplo, si lo hacemos como en Redux Toolkit pero sin el spread operator, lo que haría sería sobreescribir todo por este nuevo valor, pero aquí se está mutando y al mismo tiempo creará un nuevo state con lo que ya se tenía y con el valor nuevo. Para hacer la prueba en el código comentado de arriba se puede descomentar todo y comentar solo el -- ...state.tasks, -- y veremos que todo el state se sobreescribe con solo el nuevo valor
+      })
+    );
   },
 
   setDraggingTaskId: (taskId: string) => {
