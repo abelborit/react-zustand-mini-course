@@ -1,7 +1,7 @@
 /* se coloca como -- type StateCreator -- y -- type { TaskInterface, TaskStatus } -- porque solo usaremos el "StateCreator" y "TaskInterface, TaskStatus" como una interface y no queremos que cuando se cree la aplicación se importen algún archivo físico de las interfaces */
 import { create, type StateCreator } from "zustand";
 import type { TaskInterface, TaskStatus } from "../../interfaces";
-import { devtools } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 import { v4 as uuidv4 } from "uuid";
 // import { produce } from "immer";
 import { immer } from "zustand/middleware/immer";
@@ -135,4 +135,7 @@ const storeAPI: StateCreator<
 });
 
 /* lo que sí es importante al crear un store es que se coloca como un hook personalizado, es decir, con la palabra "use" y las reglas de React dicen que todos los hooks tienen que empezar con la palabra "use" */
-export const useTaskStore = create<TaskState>()(devtools(immer(storeAPI)));
+/* NOTA: según el orden como se coloquen los middlewares puede ser que afecte al tipado que tenemos arriba en el "storeAPI" y cambiar un poco el orden también de este tipado */
+export const useTaskStore = create<TaskState>()(
+  devtools(persist(immer(storeAPI), { name: "task-store" }))
+);

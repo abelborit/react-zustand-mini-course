@@ -8,12 +8,16 @@ import {
 import { WhiteCard } from "../../components";
 import { useBearStore } from "../../stores/bears/bears.store";
 import { usePersonStore } from "../../stores/person/person.store";
+import { useTaskStore } from "../../stores/taks/task.store";
 
 export const Dashboard = () => {
   const totalBears = useBearStore((state) => state.totalBears);
   /* aquí se podría usar un getter en el usePersonStore para unir el firstName y lastName */
   const firstName = usePersonStore((state) => state.firstName);
   const lastName = usePersonStore((state) => state.lastName);
+  const tasks = useTaskStore((state) => state.tasks);
+
+  const tasksQuantity = Object.keys(tasks).length;
 
   return (
     <>
@@ -37,7 +41,7 @@ export const Dashboard = () => {
         <WhiteCard centered>
           <IoListOutline size={50} className="text-indigo-600" />
           <h2>Tareas</h2>
-          <p>Información</p>
+          <p>{tasksQuantity}</p>
         </WhiteCard>
 
         <WhiteCard centered>
