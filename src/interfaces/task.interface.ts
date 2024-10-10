@@ -1,4 +1,4 @@
-export interface TaksInterface {
+export interface TaskInterface {
   id: string;
   title: string;
   status: TaskStatus;
