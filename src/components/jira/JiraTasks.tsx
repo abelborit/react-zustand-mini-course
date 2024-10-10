@@ -1,10 +1,12 @@
-import { DragEvent } from "react";
+import { DragEvent, useState } from "react";
 import {
   IoCheckmarkCircleOutline,
   IoEllipsisHorizontalOutline,
 } from "react-icons/io5";
 import { TaskInterface, TaskStatus } from "../../interfaces";
 import { SingleTask } from "./SingleTask";
+import { useTaskStore } from "../../stores/taks/task.store";
+import classNames from "classnames";
 
 interface Props {
   title: string;
@@ -13,18 +15,24 @@ interface Props {
 }
 
 export const JiraTasks = ({ title, value, tasks }: Props) => {
+  const isDraggingTask = useTaskStore((state) => !!state.draggingTaskId); // se coloca la doble negación para transformarlo a un valor boolean para manejar solo las casuísticas de true o false cuando se esté haciendo o no se esté haciendo el dragging del elemento, también se podría manejar de forma normal -- const draggingTaskId = useTaskStore((state) => state.draggingTaskId); -- y hacer alguna validación
+  const [isDragOver, setIsDragOver] = useState(false);
+
   const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
+    setIsDragOver(true);
     console.log("onDragOver");
   };
 
   const handleDragLeave = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
+    setIsDragOver(false);
     console.log("onDragLeave");
   };
 
   const handleDrop = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
+    setIsDragOver(false);
     console.log("onDrop", value);
   };
 
@@ -37,7 +45,14 @@ export const JiraTasks = ({ title, value, tasks }: Props) => {
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
-      className="!text-black relative flex flex-col rounded-[20px]  bg-white bg-clip-border shadow-3xl shadow-shadow-500  w-full !p-4 3xl:p-![18px]"
+      /* aquí se está usando el package classNames para unir clases, lo cual se puede hacer sin algún package de terceros pero de esta forma también es un poco más facil ya que nos permite hacer algunas validaciones más simples */
+      className={classNames(
+        "!text-black border-4 relative flex flex-col rounded-[20px]  bg-white bg-clip-border shadow-3xl shadow-shadow-500  w-full !p-4 3xl:p-![18px]",
+        {
+          "border-blue-500 border-dotted": isDraggingTask,
+          "border-green-500 border-dotted": isDraggingTask && isDragOver,
+        }
+      )}
     >
       {/* Task Header */}
       <div className="relative flex flex-row justify-between">
