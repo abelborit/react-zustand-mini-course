@@ -4,14 +4,15 @@ import { TaskInterface, TaskStatus } from "../../interfaces";
 import { SingleTask } from "./SingleTask";
 import { useTaskStore } from "../../stores/taks/task.store";
 import classNames from "classnames";
+import Swal from "sweetalert2";
 
 interface Props {
   title: string;
-  value: TaskStatus;
+  status: TaskStatus;
   tasks: TaskInterface[];
 }
 
-export const JiraTasks = ({ title, value, tasks }: Props) => {
+export const JiraTasks = ({ title, status, tasks }: Props) => {
   const isDraggingTask = useTaskStore((state) => !!state.draggingTaskId); // se coloca la doble negación para transformarlo a un valor boolean para manejar solo las casuísticas de true o false cuando se esté haciendo o no se esté haciendo el dragging del elemento, también se podría manejar de forma normal -- const draggingTaskId = useTaskStore((state) => state.draggingTaskId); -- y hacer alguna validación
   const [isDragOver, setIsDragOver] = useState(false);
   const setOnTaskDrop = useTaskStore((state) => state.setOnTaskDrop);
@@ -32,12 +33,27 @@ export const JiraTasks = ({ title, value, tasks }: Props) => {
   const handleDrop = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     setIsDragOver(false);
-    setOnTaskDrop(value);
-    // console.log("onDrop", value);
+    setOnTaskDrop(status);
+    // console.log("onDrop", status);
   };
 
-  const handleAddTask = () => {
-    setAddTask("New Task", value);
+  const handleAddTask = async () => {
+    const { isConfirmed, value } = await Swal.fire({
+      title: "Add a new task",
+      input: "text",
+      inputLabel: "Task name",
+      inputPlaceholder: "Enter the name of the task",
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value) {
+          return "You must enter a name for the task";
+        }
+      },
+    });
+
+    if (!isConfirmed) return;
+
+    setAddTask(value, status);
   };
 
   return (
