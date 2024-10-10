@@ -17,8 +17,7 @@ interface Props {
 export const JiraTasks = ({ title, value, tasks }: Props) => {
   const isDraggingTask = useTaskStore((state) => !!state.draggingTaskId); // se coloca la doble negación para transformarlo a un valor boolean para manejar solo las casuísticas de true o false cuando se esté haciendo o no se esté haciendo el dragging del elemento, también se podría manejar de forma normal -- const draggingTaskId = useTaskStore((state) => state.draggingTaskId); -- y hacer alguna validación
   const [isDragOver, setIsDragOver] = useState(false);
-  const changeTaskStatus = useTaskStore((state) => state.changeTaskStatus);
-  const draggingTaskId = useTaskStore((state) => state.draggingTaskId);
+  const setOnTaskDrop = useTaskStore((state) => state.setOnTaskDrop);
 
   const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -35,7 +34,7 @@ export const JiraTasks = ({ title, value, tasks }: Props) => {
   const handleDrop = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     setIsDragOver(false);
-    changeTaskStatus(draggingTaskId!, value);
+    setOnTaskDrop(value);
     // console.log("onDrop", value);
   };
 
