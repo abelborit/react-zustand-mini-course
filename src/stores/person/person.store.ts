@@ -2,6 +2,7 @@
 import { create, type StateCreator } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { customSessionStorage } from "../storages/customSessionStorage.storage";
+import { logger } from "../middlewares/logger.middleware";
 // import { customFirebaseStorage } from "../storages/customFirebaseStorage.storage";
 
 /* se puede tener todo junto o sino por separado en dos interfaces */
@@ -46,15 +47,18 @@ const storeAPI: StateCreator<
 
 export const usePersonStore = create<PersonState & ActionsState>()(
   /* los middlewares son funciones que envuelven nuestro objeto de configuración del store, es decir, el -- (set => ({.....})) -- */
-  /* este middleware nos servirá para conectar Redux Devtools para poder apreciar cómo funciona nuestro store desde el propio Redux Devtools (por eso necesario instalar Redux Devtools en el navegador) */
-  devtools(
-    /* este middleware persist nos servirá para grabar nuestro estado o state de forma persistente en el localStorage */
-    persist(storeAPI, {
-      /* este objeto adicional es para pasarle una configuración la cual llevará, por ejemplo, el name que será el nombre que se le dará al storage con el que quiero que se guarde en el localStorage */
-      name: "person-storage",
-      /* también podemos personalizar un poco más nuestro middleware y que en vez de que se grabe en el localStorage se guarde en el sessionStorage por ejemplo */
-      storage: customSessionStorage, // el storage espera algo de tipo createJSONStorage por eso se coloca createJSONStorage(.....) y tiene un callback para que se ejecute en ese momento. Eso ya está en el archivo -- customSessionStorage.storage.ts --
-      // storage: customFirebaseStorage,
-    })
+  /* este middleware es uno custom creados por nosotros mismos */
+  logger(
+    /* este middleware nos servirá para conectar Redux Devtools para poder apreciar cómo funciona nuestro store desde el propio Redux Devtools (por eso necesario instalar Redux Devtools en el navegador) */
+    devtools(
+      /* este middleware persist nos servirá para grabar nuestro estado o state de forma persistente en el localStorage */
+      persist(storeAPI, {
+        /* este objeto adicional es para pasarle una configuración la cual llevará, por ejemplo, el name que será el nombre que se le dará al storage con el que quiero que se guarde en el localStorage */
+        name: "person-storage",
+        /* también podemos personalizar un poco más nuestro middleware y que en vez de que se grabe en el localStorage se guarde en el sessionStorage por ejemplo */
+        storage: customSessionStorage, // el storage espera algo de tipo createJSONStorage por eso se coloca createJSONStorage(.....) y tiene un callback para que se ejecute en ese momento. Eso ya está en el archivo -- customSessionStorage.storage.ts --
+        // storage: customFirebaseStorage,
+      })
+    )
   )
 );

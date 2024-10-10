@@ -29,7 +29,7 @@ interface BearState {
 /* una consideración a tener en cuenta si se quiere hacer uso de algún middleware y también uso de los getters como el -- get totalBears() -- no se va a llamar de la manera esperada, pareciera que sí está funcionando correctamente pero cuando se recargue el navegador y se cambién lo datos igual seguirá haciendo de lo que se guardó en el localStorage y no de los nuevos valores que se están actualizando porque seguirá usando el código anterior. Para solucionarlo es que en vez de hacer uso de las propiedades computadas lo cambiemos a un método/función normal */
 export const useBearStore = create<BearState>()(
   persist(
-    (set, get) => ({
+    (set, get, store) => ({
       /* el estado puede constar de dos partes, el estado como tal o el initial state y sus funciones/métodos para poder actualizar el state */
       blackBears: 10,
       polarBears: 5,
@@ -45,6 +45,8 @@ export const useBearStore = create<BearState>()(
 
       /* aquí vamos a hacerlo con puro JavaScript usando un get (getter) y dentro usaremos el get() propio de Zustand para obtener el estado del store */
       totalBears: () => {
+        console.log(store);
+
         return (
           get().blackBears +
           get().polarBears +
