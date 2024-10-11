@@ -150,3 +150,33 @@ En esta sección aprenderemos a trabajar con objetos anidados dentro de nuestro 
 - ejemplo
 
 ---
+
+## Parte IV:
+
+# Temas puntuales de la sección
+
+### ¿Qué veremos en esta sección?
+
+Esta sección tiene por objetivo que aprendamos el patrón "Slices" de Zustand para poder cortar un Store en pequeñas partes fácilmente mantenibles. El ejercicio consiste en crear pequeños tajadas (slices) para que realicen una tarea en especifico y así poder separar las responsabilidades. Luego uniremos los slices en un único boundStore que permite aplicar los middlewares.
+
+También veremos el problema que surge cuando se utiliza el middleware "persist" porque al guardarse algo en el localStorage se pierde su prototipo, por ejemplo, si tenemos un arreglo con instancias de clases entonces se perderán esas instancias porque se va a serializar como string, otro ejemplo sería cuando guardamos una fecha (tiene tipo date) también se perderá su prototipo porque vamos a serializarlo como un string y cuando queramos recuperar esa fecha (tomar el valor del localStorage) vendrá como un string y no como un date, entre otros ejemplos. Veremos algunas consideraciones y ver también el por qué sucede eso.
+
+### \* PASOS A REALIZAR:
+
+1. ejemplo
+2. ejemplo
+3. ejemplo
+
+### \* RECURSOS A USAR:
+
+- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+
+### \* NOTAS:
+
+- ejemplo
+- ejemplo
+- ejemplo
+
+---
