@@ -180,3 +180,33 @@ También veremos el problema que surge cuando se utiliza el middleware "persist"
 - ejemplo
 
 ---
+
+## Parte V:
+
+# Temas puntuales de la sección
+
+### ¿Qué veremos en esta sección?
+
+El objetivo principal de la sección es poder utilizar Zustand para manejar el estado de nuestra autenticación basada en JWTs.
+
+También vamos a utilizar Zustand fuera del contexto de React (fuera de los componentes de React), que eso sería uno de los puntos fuertes que tiene sobre otros gestores de estado para React.
+
+### \* PASOS A REALIZAR:
+
+1. ejemplo
+2. ejemplo
+3. ejemplo
+
+### \* RECURSOS A USAR:
+
+- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+
+### \* NOTAS:
+
+- ejemplo
+- ejemplo
+- ejemplo
+
+---
