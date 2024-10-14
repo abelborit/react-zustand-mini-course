@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { FormEvent, useRef } from "react";
 import { WhiteCard } from "../../components";
 import { useWeddingBoundStore } from "../../stores/wedding";
 
@@ -29,8 +29,17 @@ export const WeddingInvitationPage = () => {
   const setEventTime = useWeddingBoundStore((state) => state.setEventTime);
 
   /* ahorita como está de tipo Date nos dará un objeto pero sería mejor que nos de tipo number para no perder el tipado original porque es más facil pasar de string que viene del localStorage a number para reconstruir la fecha */
-  // const eventDate = useWeddingBoundStore((state) => state.eventDate);
+  const eventDate = useWeddingBoundStore((state) => state.eventDate);
   // console.log(typeof eventDate, eventDate);
+
+  const isConfirmed = useWeddingBoundStore((state) => state.isConfirmed);
+  const setIsConfirmed = useWeddingBoundStore((state) => state.setIsConfirmed);
+
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    console.log({ firstName, lastName, guestCount, eventDate, isConfirmed });
+  };
 
   return (
     <>
@@ -40,7 +49,7 @@ export const WeddingInvitationPage = () => {
 
       <WhiteCard className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[550px]">
-          <form>
+          <form onSubmit={onSubmit}>
             <div className="-mx-3 flex flex-wrap">
               <div className="w-full px-3 sm:w-1/2">
                 <div className="mb-5">
@@ -137,6 +146,8 @@ export const WeddingInvitationPage = () => {
                     name="isComing"
                     id="radioButton1"
                     className="h-5 w-5"
+                    checked={isConfirmed}
+                    onChange={() => setIsConfirmed(true)}
                   />
                   <label className="pl-3 text-base font-medium text-[#07074D]">
                     Si
@@ -148,6 +159,8 @@ export const WeddingInvitationPage = () => {
                     name="isComing"
                     id="radioButton2"
                     className="h-5 w-5"
+                    checked={!isConfirmed}
+                    onChange={() => setIsConfirmed(false)}
                   />
                   <label className="pl-3 text-base font-medium text-[#07074D]">
                     No
