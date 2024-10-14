@@ -205,7 +205,7 @@ También vamos a utilizar Zustand fuera del contexto de React (fuera de los comp
 
 ### \* NOTAS:
 
-- ejemplo
+- Se está usando este backend `https://hub.docker.com/r/klerith/teslo-shop-cors`
 - ejemplo
 - ejemplo
 
