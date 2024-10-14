@@ -1,12 +1,27 @@
+import { useRef } from "react";
 import { WhiteCard } from "../../components";
 import { useWeddingBoundStore } from "../../stores/wedding";
 
 export const WeddingInvitationPage = () => {
   const firstName = useWeddingBoundStore((state) => state.firstName);
   const lastName = useWeddingBoundStore((state) => state.lastName);
-
   const setFirstName = useWeddingBoundStore((state) => state.setFirstName);
   const setLastName = useWeddingBoundStore((state) => state.setLastName);
+
+  const guestCount = useWeddingBoundStore((state) => state.guestCount);
+  const setGuestCount = useWeddingBoundStore((state) => state.setGuestCount);
+
+  /* para borrar el "0" al escribir directamente en el input que aparece en el formulario de la cantidad de invitados. Al slice no le afecta porque al momento de hacer onChange se formatea a número y automáticamente se quita ese 0 al principio. Pero en el html sigue estando presente por eso el uso de userRef */
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  if (inputRef.current) {
+    // console.log(inputRef.current.value.toString().split(""));
+    let countSplitted = inputRef.current.value.toString().split("");
+
+    if (countSplitted.length > 1 && countSplitted[0] === "0") {
+      countSplitted = countSplitted.slice(1);
+      inputRef.current.value = countSplitted.join("");
+    }
+  }
 
   return (
     <>
@@ -56,12 +71,17 @@ export const WeddingInvitationPage = () => {
                 ¿Cuántos invitados traerá?
               </label>
               <input
+                ref={inputRef}
                 type="number"
                 name="guestNumber"
                 id="guestNumber"
                 placeholder="5"
                 min="0"
                 className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                value={guestCount}
+                /* todos los input, independientemente de qué type sea, regresan un string */
+                // onChange={(event) => setGuestCount(Number(event.target.value))} // FORMA 1 para pasar de string a number
+                onChange={(event) => setGuestCount(+event.target.value)} // FORMA 2 para pasar de string a number
               />
             </div>
 

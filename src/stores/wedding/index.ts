@@ -3,8 +3,9 @@
 import { create } from "zustand";
 import { createPersonSlice, PersonSlice } from "./person.slice";
 import { devtools } from "zustand/middleware";
+import { createGuestSlice, GuestSlice } from "./guest.slice";
 
-type WeddingBoundStoreType = PersonSlice;
+type WeddingBoundStoreType = PersonSlice & GuestSlice;
 
 export const useWeddingBoundStore = create<WeddingBoundStoreType>()(
   devtools(
@@ -19,6 +20,7 @@ export const useWeddingBoundStore = create<WeddingBoundStoreType>()(
 
     (...a) => ({
       ...createPersonSlice(...a),
+      ...createGuestSlice(...a),
     })
   )
 );
