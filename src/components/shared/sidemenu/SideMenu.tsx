@@ -3,7 +3,7 @@ import { IoSpeedometerOutline, IoPawOutline, IoLogOutOutline, IoHeartOutline, Io
 import { NavLink } from 'react-router-dom';
 import './SideMenu.css';
 import { SideMenuItem } from './SideMenuItem';
-
+import { useAuthStore } from '../../../stores/bears/auth.store';
 
 interface MenuItem {
   title: string;
@@ -20,10 +20,8 @@ const menuItems: MenuItem[] = [
   { title: 'Boda', subTitle: 'Invitados a la boda', href: '/dashboard/wedding-invitation', Icon: IoHeartOutline },
 ];
 
-
-
-
 export const SideMenu = () => {
+  const logoutUser = useAuthStore((state) => state.logoutUser);
 
   return (
     <div id="menu" className="bg-gray-900 min-h-screen z-10 text-slate-300 w-80 left-0 overflow-y-scroll">
@@ -52,17 +50,15 @@ export const SideMenu = () => {
 
       {/* Menu Items */ }
       <nav id="nav" className="w-full px-6">
-
         {
           menuItems.map( item =>(
             <SideMenuItem key={item.href} {...item} />
           ) )
         }
 
-
-
         {/* Logout */}
-        <NavLink to={'/auth/login'} className="mt-10">
+        {/* aquí también podría ser un button y no habría necesidad de colocar un "href" o un "to" como en este caso porque el estado ya está compartido por Zustand y también el usuario como estaría dentro del DashboardLayout.tsx entonces su estado del authStatus también va a cambiar porque hizo el logout y se volvería a re-renderizar el DashboardLayout.tsx (porque cambió el estado del store) y ahí tiene las validaciones entonces se encargará de realizar la lógica de revisar el status del usuario para ver si puede permanecer o no en la página */}
+        <NavLink to={'/auth/login'} onClick={logoutUser} className="mt-10">
           <div>
             <IoLogOutOutline />
           </div>
