@@ -199,7 +199,7 @@ También vamos a utilizar Zustand fuera del contexto de React (fuera de los comp
 
 ### \* RECURSOS A USAR:
 
-- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+- Paquete `axios` usando `npm i axios` desde `https://www.npmjs.com/package/axios`
 - Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
 - Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
 
