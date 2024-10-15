@@ -1,10 +1,12 @@
 import { FormEvent } from "react";
 import { useAuthStore } from "../../stores/bears/auth.store";
+import { useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
+  const navigate = useNavigate();
   const loginUser = useAuthStore((state) => state.loginUser);
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // const { username, password, remember } = event.target as HTMLFormElement; // aquí quedaría de tipo any todo, por eso abajo se está haciendo más completo aunque hay muchas formas para poder hacerlo como con Formik, useState, Use Form, etc
     const { username, password, remember } =
@@ -15,11 +17,18 @@ export const LoginPage = () => {
       };
     console.log(username.value, password.value, remember.checked);
 
-    loginUser(username.value, password.value);
+    try {
+      await loginUser(username.value, password.value);
+      navigate("/dashboard");
 
-    // username.value = "";
-    // password.value = "";
-    // remember.checked = false;
+      /* aquí se podría hacer la limpieza de los campos pero como se está sacando al usuario de una url para pasarla a otra, entonces no sería tan necesario hacer esa limpieza */
+      // username.value = "";
+      // password.value = "";
+      // remember.checked = false;
+    } catch (error) {
+      console.log(error);
+      console.log("No se pudo autenticar");
+    }
   };
 
   return (
