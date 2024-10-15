@@ -10,6 +10,7 @@ import { RequestInfo, WhiteCard } from "../../components";
 import { useBearStore } from "../../stores/bears/bears.store";
 import { usePersonStore } from "../../stores/person/person.store";
 import { useTaskStore } from "../../stores/taks/task.store";
+import { useAuthStore } from "../../stores/bears/auth.store";
 
 export const Dashboard = () => {
   const totalBears = useBearStore((state) => state.totalBears);
@@ -17,6 +18,7 @@ export const Dashboard = () => {
   const firstName = usePersonStore((state) => state.firstName);
   const lastName = usePersonStore((state) => state.lastName);
   const tasks = useTaskStore((state) => state.tasks);
+  const userName = useAuthStore((state) => state.user?.fullName || "No user");
 
   const tasksQuantity = Object.keys(tasks).length;
 
@@ -54,7 +56,7 @@ export const Dashboard = () => {
         <WhiteCard centered>
           <IoLockClosedOutline size={50} className="text-indigo-600" />
           <h2>Auth</h2>
-          <p>Información</p>
+          <p>{userName}</p>
         </WhiteCard>
 
         <WhiteCard centered className="col-span-3">
