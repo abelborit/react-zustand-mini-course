@@ -3,6 +3,7 @@ import { create, type StateCreator } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 // import { customSessionStorage } from "../storages/customSessionStorage.storage";
 import { logger } from "../middlewares/logger.middleware";
+import { useWeddingBoundStore } from "../wedding";
 // import { customFirebaseStorage } from "../storages/customFirebaseStorage.storage";
 
 /* se puede tener todo junto o sino por separado en dos interfaces */
@@ -62,3 +63,16 @@ export const usePersonStore = create<PersonState & ActionsState>()(
     )
   )
 );
+
+/* queremos que los estados de este store usePersonStore puedan ser usados en otro store por ejemplo en el useAuthStore. Haremos uso de las suscripciones para poder emitir cualquier cambio que suceda en este objeto (en este store) */
+/* hay que tener en cuenta que si ya se está haciendo este lazo aquí no hacer lo mismo en el useAuthStore porque podría generar una dependencia cíclica */
+/* NOTA: los cambios de este store sí hará que cambie el valor del store que seleccionamos pero al revés no se podrá hacer lo mismo porque no hay esa suscripción o ese Two Way Data Binding, es decir, los datos que cambiemos aquí afectarán en el store seleccionado pero los datos que cambiemos en el store seleccionado no afectarán a este store */
+usePersonStore.subscribe((nextState /* , prevState */) => {
+  // console.log({ nextState, prevState });
+
+  const { firstName, lastName } = nextState;
+
+  /* queremos cambiar un valor que se encuentra en el useWeddingBoundStore */
+  useWeddingBoundStore.getState().setFirstName(firstName);
+  useWeddingBoundStore.getState().setLastName(lastName);
+});
