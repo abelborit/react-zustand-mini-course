@@ -6,6 +6,7 @@ import {
   IoHeartOutline,
   IoListOutline,
   IoAccessibilityOutline,
+  IoAnalytics,
 } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 import "./SideMenu.css";
@@ -49,6 +50,12 @@ const menuItems: MenuItem[] = [
     subTitle: "Invitados a la boda",
     href: "/dashboard/wedding-invitation",
     Icon: IoHeartOutline,
+  },
+  {
+    title: "React Query",
+    subTitle: "Gestor de estados para peticiones",
+    href: "/dashboard/react-query",
+    Icon: IoAnalytics,
   },
 ];
 

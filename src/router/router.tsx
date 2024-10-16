@@ -2,8 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import { Root } from '../Root';
 import { AuthLayout, DashboardLayout } from '../layouts';
-import { BearPage, Dashboard, JiraPage, LoginPage, PersonPage, WeddingInvitationPage } from '../pages';
-
+import { BearPage, Dashboard, JiraPage, LoginPage, PersonPage, ReactQueryPage, WeddingInvitationPage } from '../pages';
 
 export const router = createBrowserRouter( [
   {
@@ -34,8 +33,11 @@ export const router = createBrowserRouter( [
           {
             path: 'wedding-invitation',
             element: <WeddingInvitationPage />
+          },
+          {
+            path: 'react-query',
+            element: <ReactQueryPage />
           }
-
         ]
       },
 
@@ -49,7 +51,6 @@ export const router = createBrowserRouter( [
             element: <LoginPage />
           }
         ]
-
       },
 
     ],
