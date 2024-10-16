@@ -210,3 +210,35 @@ También vamos a utilizar Zustand fuera del contexto de React (fuera de los comp
 - ejemplo
 
 ---
+
+## Parte VI:
+
+# Temas puntuales de la sección
+
+### ¿Qué veremos en esta sección?
+
+Esta es una sección extendida de otro curso para aprender a manejar el estado global de las aplicaciones usando React Query para controlar el estado que viene desde el servidor de forma asíncrona y también usando en conjunto con Zustand, otra biblioteca de Javascript para React para manejar el estado local de las aplicaciones. React Query no trabaja con una biblioteca para solicitar datos específicamente, para eso podemos usar axios o fetch de JavaScript.
+
+### \* PASOS A REALIZAR:
+
+1. ejemplo
+2. ejemplo
+3. ejemplo
+
+### \* RECURSOS A USAR:
+
+- Paquete `react-query` usando `npm i @tanstack/react-query` desde `https://tanstack.com/query/latest/docs/framework/react/installation`
+
+  - NOTA: en esta sección se estará usando la última versión 4 de react-query con `npm i @tanstack/react-query@4`
+
+- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+
+- Paquete `nombre_paquete` usando `comando_paquete` desde `url_paquete`
+
+### \* NOTAS:
+
+- ejemplo
+- ejemplo
+- ejemplo
+
+---
