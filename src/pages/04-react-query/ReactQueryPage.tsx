@@ -3,7 +3,7 @@ import { useFetchRepositories } from "../../hooks/useReposGithub";
 import { useFavoriteReposGithubStore } from "../../stores/favoriteReposGithub/favoriteReposGithub.store";
 
 export const ReactQueryPage = () => {
-  const { data, isLoading } = useFetchRepositories();
+  const { data, isLoading } = useFetchRepositories("fazt");
   // console.log({ data });
 
   const favoriteReposGithub = useFavoriteReposGithubStore(
