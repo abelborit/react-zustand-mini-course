@@ -1,4 +1,4 @@
-import { WhiteCard } from "../../components";
+import { CardReposGithub } from "../../components/reactQuery/CardReposGithub";
 import { useFetchRepositories } from "../../hooks/useReposGithub";
 
 export const ReactQueryPage = () => {
@@ -15,22 +15,7 @@ export const ReactQueryPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
         {data?.map((element) => (
-          <WhiteCard centered>
-            <h2>{element.name}</h2>
-            <br />
-
-            <p className="font-bold">
-              Created:{" "}
-              <span className="font-normal">
-                {JSON.stringify(element.created_at, null, 2)}
-              </span>
-            </p>
-
-            <p className="font-bold">
-              Default Branch:{" "}
-              <span className="font-normal">{element.default_branch}</span>
-            </p>
-          </WhiteCard>
+          <CardReposGithub repository={element} />
         ))}
       </div>
     </>
